@@ -1,4 +1,6 @@
 class World
+  attr_reader :length, :width
+
   def initialize(length, width, live_cells)
     @length = length
     @width = width
