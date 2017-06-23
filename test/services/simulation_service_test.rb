@@ -18,6 +18,8 @@ class SimulationServiceTest < ActiveSupport::TestCase
 
     assert simulation_service.call == true
     assert simulation_service.result == {live_cells: [[3,4], [5,6]]}.to_json
+    generator.verify
+    fake_world.verify
   end
 
   test "it returns false when there is an error" do
@@ -28,5 +30,6 @@ class SimulationServiceTest < ActiveSupport::TestCase
 
     assert simulation_service.call == false
     assert simulation_service.result == {error: "Test Message"}.to_json
+    generator.verify
   end
 end
