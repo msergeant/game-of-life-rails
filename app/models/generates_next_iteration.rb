@@ -4,7 +4,7 @@ class GeneratesNextIteration
   end
 
   def generate
-    new_world = World.new(@world.length, @world.width, [])
+    new_world = World.new([])
     ListsPointsToCheck.new(@world).list.each do |point|
       alive = @world.alive?(point)
       live_neighbor_count = CountsLiveNeighbors.new(@world, point).count

@@ -2,19 +2,19 @@ require 'test_helper'
 
 class ListsPointsToCheckTest < ActiveSupport::TestCase
   test "can be initialized" do
-    lists_points_to_check = ListsPointsToCheck.new(World.new(50, 50, []))
+    lists_points_to_check = ListsPointsToCheck.new(World.new([]))
 
     assert lists_points_to_check
   end
 
   test "lists nothing for empty world" do
-    lists_points_to_check = ListsPointsToCheck.new(World.new(50, 50, []))
+    lists_points_to_check = ListsPointsToCheck.new(World.new([]))
 
     assert lists_points_to_check.list == []
   end
 
   test "lists points of interest" do
-    lists_points_to_check = ListsPointsToCheck.new(World.new(50, 50, [[5,7]]))
+    lists_points_to_check = ListsPointsToCheck.new(World.new([[5,7]]))
     correct_list = [
       Point.new(4, 6), Point.new(5, 6), Point.new(6, 6),
       Point.new(4, 7), Point.new(5, 7), Point.new(6, 7),
@@ -27,7 +27,7 @@ class ListsPointsToCheckTest < ActiveSupport::TestCase
   end
 
   test "lists points of interest without repeats" do
-    lists_points_to_check = ListsPointsToCheck.new(World.new(50, 50, [[5,7], [6, 7]]))
+    lists_points_to_check = ListsPointsToCheck.new(World.new([[5,7], [6, 7]]))
     correct_list = [
       Point.new(4, 6), Point.new(5, 6), Point.new(6, 6), Point.new(7, 6),
       Point.new(4, 7), Point.new(5, 7), Point.new(6, 7), Point.new(7, 7),
