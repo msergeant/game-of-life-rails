@@ -5,7 +5,7 @@ class SimulationService
     @generator = generator
   end
 
-  def call
+  def simulate
     begin
       world = World.new(50, 50, @live_cells)
       @generator ||= GeneratesNextIteration.new(world)
