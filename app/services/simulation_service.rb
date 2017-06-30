@@ -5,18 +5,16 @@ class SimulationService
     @generator = generator
   end
 
-  def simulate
+  def call
     begin
       @generator ||= GeneratesNextIteration.new(World.new(@live_cells))
       new_cells = @generator.generate.live_cells.map{|p| [p.x, p.y] }
 
-      @result = {live_cells: new_cells}.to_json
+      result = {live_cells: new_cells}.to_json
 
-      true
+      OpenStruct.new(success?: true, result: result)
     rescue Exception => e
-      @result = {error: e.message}.to_json
-
-      false
+      OpenStruct.new(success?: false, result: nil, errors: [e.message])
     end
   end
 end

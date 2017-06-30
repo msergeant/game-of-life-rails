@@ -14,10 +14,10 @@ class SimulationServiceTest < ActiveSupport::TestCase
     generator.expect :generate, fake_world
     fake_world.expect :live_cells, [Point.new(3,4), Point.new(5,6)]
 
-    simulation_service = SimulationService.new([], generator)
+    result = SimulationService.new([], generator).call
 
-    assert simulation_service.simulate == true
-    assert simulation_service.result == {live_cells: [[3,4], [5,6]]}.to_json
+    assert result.success? == true
+    assert result.result == {live_cells: [[3,4], [5,6]]}.to_json
     generator.verify
     fake_world.verify
   end
@@ -26,10 +26,11 @@ class SimulationServiceTest < ActiveSupport::TestCase
     generator = MiniTest::Mock.new
     generator.expect(:generate, nil){ raise ArgumentError.new("Test Message") }
 
-    simulation_service = SimulationService.new([], generator)
+    result = SimulationService.new([], generator).call
 
-    assert simulation_service.simulate == false
-    assert simulation_service.result == {error: "Test Message"}.to_json
+    assert result.success? == false
+    assert result.result == nil
+    assert result.errors == ["Test Message"]
     generator.verify
   end
 end
