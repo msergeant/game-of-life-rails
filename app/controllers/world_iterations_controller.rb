@@ -1,6 +1,6 @@
 class WorldIterationsController < ApplicationController
   def show
-    result = SimulationService.new(params[:live_cells]).call
+    result = SimulationService.new(params[:live_cells]).simulate
     if(result.success?)
       status = :ok
       json_result = result.result

@@ -5,7 +5,7 @@ class SimulationService
     @generator = generator
   end
 
-  def call
+  def simulate
     begin
       @generator ||= GeneratesNextIteration.new(World.new(@live_cells))
       new_cells = @generator.generate.live_cells.map{|p| [p.x, p.y] }

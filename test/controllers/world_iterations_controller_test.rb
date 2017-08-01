@@ -3,8 +3,7 @@ require 'test_helper'
 class WorldIterationsControllerTest < ActionDispatch::IntegrationTest
   test "should return next iteration" do
     service = MiniTest::Mock.new
-    service.expect(:simulate, true)
-    service.expect(:result, {live_cells: [[0,0]]})
+    service.expect(:simulate, OpenStruct.new(success?: true, result: {live_cells: [[0,0]]}))
 
     SimulationService.stub :new, service do
       get world_iterations_url, as: :json, params: {live_cells: [[0,0], [0,9]]}
@@ -15,8 +14,7 @@ class WorldIterationsControllerTest < ActionDispatch::IntegrationTest
 
   test "should return error" do
     service = MiniTest::Mock.new
-    service.expect(:simulate, false)
-    service.expect(:result, {error: 'Bad request'})
+    service.expect(:simulate, OpenStruct.new(success?: false, errors: ['Bad request']))
 
     SimulationService.stub :new, service do
       get world_iterations_url, as: :json, params: {live_cells: [[0,0], [0,9]]}
