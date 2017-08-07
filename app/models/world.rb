@@ -1,10 +1,15 @@
 class World
   def initialize(live_cells)
-    @live_cells = live_cells.uniq
+    @live_cells = live_cells.uniq.sort
   end
 
   def alive?(point)
-    @live_cells.include?( [point.x, point.y] )
+    @live_cells.each do |x,y|
+      return true if point.x.eql?(x) && point.y.eql?(y)
+      return false if x > point.x
+    end
+
+    false
   end
 
   def live_cells
